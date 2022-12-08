@@ -6,6 +6,10 @@ inputs:
     required: true
   api_key:
     description: FakeRelay API key if it isn't defined in the config.json
+  tag:
+    description: Tag of the getmoarfediverse docker container
+    required: true
+    default: latest
 runs:
   using: composite
   steps:
@@ -25,7 +29,7 @@ runs:
     - name: import-data
       env:
         FAKERELAY_APIKEY: ${{ inputs.api_key }}
-      run: docker run -v "${MOAR_TMP_DIR}:/data" -e "FAKERELAY_APIKEY=${FAKERELAY_APIKEY}" ghcr.io/g3rv4/getmoarfediverse:latest
+      run: docker run -v "${MOAR_TMP_DIR}:/data" -e "FAKERELAY_APIKEY=${FAKERELAY_APIKEY}" ghcr.io/g3rv4/getmoarfediverse:${{ inputs.tag }}
       shell: bash
     - name: store artifact
       uses: actions/upload-artifact@v3
