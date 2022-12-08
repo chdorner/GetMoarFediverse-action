@@ -4,6 +4,8 @@ inputs:
   config_file:
     description: Path to the config.json
     required: true
+  api_key:
+    description: FakeRelay API key if it isn't defined in the config.json
 runs:
   using: composite
   steps:
@@ -21,7 +23,9 @@ runs:
         path: ${{ env.MOAR_TMP_DIR }}
         if_no_artifact_found: warn
     - name: import-data
-      run: docker run -v "${MOAR_TMP_DIR}:/data" ghcr.io/g3rv4/getmoarfediverse:latest
+      env:
+        FAKERELAY_APIKEY: ${{ inputs.api_key }}
+      run: docker run -v "${MOAR_TMP_DIR}:/data" -e "FAKERELAY_APIKEY=${FAKERELAY_APIKEY}" ghcr.io/g3rv4/getmoarfediverse:latest
       shell: bash
     - name: store artifact
       uses: actions/upload-artifact@v3
