@@ -29,7 +29,11 @@ runs:
     - name: import-data
       env:
         FAKERELAY_APIKEY: ${{ inputs.api_key }}
-      run: docker run -v "${MOAR_TMP_DIR}:/data" -e "FAKERELAY_APIKEY=${FAKERELAY_APIKEY}" ghcr.io/g3rv4/getmoarfediverse:${{ inputs.tag }}
+      run: |
+        wget -nv https://github.com/g3rv4/getMoarFediverse/releases/latest/download/GetMoarFediverse_linux-x64.tgz
+        tar -xzf GetMoarFediverse_linux-x64.tgz
+        cd GetMoarFediverse-*
+        ./GetMoarFediverse ${{ env.MOAR_TMP_DIR }}/config.json
       shell: bash
     - name: store artifact
       uses: actions/upload-artifact@v3
