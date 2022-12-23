@@ -1,3 +1,5 @@
+The action has now moved into the main [GetMoarFediverse](https://github.com/g3rv4/GetMoarFediverse) repository.
+
 # GetMoarFediverse-action
 
 This action runs [GetMoarFediverse](https://github.com/g3rv4/GetMoarFediverse) as a GitHub action, which means... you don't need to host it anywhere!
