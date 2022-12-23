@@ -6,10 +6,10 @@ inputs:
     required: true
   api_key:
     description: FakeRelay API key if it isn't defined in the config.json
-  tag:
-    description: Tag of the getmoarfediverse docker container
+  executable_path:
+    description: Path to the GetMoarFediverse archive
     required: true
-    default: latest
+    default: https://github.com/g3rv4/getMoarFediverse/releases/latest/download/GetMoarFediverse_linux-x64.tgz
 runs:
   using: composite
   steps:
@@ -30,7 +30,7 @@ runs:
       env:
         FAKERELAY_APIKEY: ${{ inputs.api_key }}
       run: |
-        wget -nv https://github.com/g3rv4/getMoarFediverse/releases/latest/download/GetMoarFediverse_linux-x64.tgz
+        wget -nv ${{ inputs.executable_path }}
         tar -xzf GetMoarFediverse_linux-x64.tgz
         cd GetMoarFediverse-*
         ./GetMoarFediverse ${{ env.MOAR_TMP_DIR }}/config.json
